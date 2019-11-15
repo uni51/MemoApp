@@ -1,9 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import * as Font from 'expo-font';
+import { createIconSet } from '@expo/vector-icons';
+import fontAwsome from '../../assets/fonts/fa-solid-900.ttf';
+
+const CustomIcon = createIconSet({
+  pencil: '\uf303',
+  plus: '\uf067',
+}, 'FontAwsome');
 
 class CircleButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { fontLoaded: false };
+  }
+
+  async componentWillMount() {
+    await Font.loadAsync({
+      FontAwsome: fontAwsome,
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
   render() {
-    const { style, color } = this.props;
+    const { name, style, color } = this.props;
 
     let bgColor = '#E31676';
     let textColor = '#fff';
@@ -16,9 +37,11 @@ class CircleButton extends React.Component {
     return (
       // スタイルのcircleButtonをstyleで上書きする
       <View style={[styles.circleButton, style, { backgroundColor: bgColor }]}>
-        <Text style={[styles.circleButtonTitle, { color: textColor }]}>
-          {this.props.children}
-        </Text>
+        {
+          this.state.fontLoaded ? (
+            <CustomIcon name={name} style={[styles.circleButtonTitle, { color: textColor }]} />
+          ) : null
+        }
       </View>
     );
   }
@@ -40,7 +63,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   circleButtonTitle: {
-    fontSize: 32,
+    fontFamily: 'FontAwsome',
+    fontSize: 24,
     lineHeight: 32,
   },
 });
