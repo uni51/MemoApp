@@ -25,6 +25,7 @@ class CircleButton extends React.Component {
   }
 
   render() {
+    // propsは親から渡ってくるプロパティ
     const { name, style, color, onPress } = this.props;
 
     let bgColor = '#E31676';
@@ -53,7 +54,7 @@ class CircleButton extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width: 48,
-    height: 48,    
+    height: 48,
     position: 'absolute',
     bottom: 32,
     right: 32,
